@@ -11,9 +11,11 @@ class User {
         "INSERT INTO Customer (First_Name, Last_Name,Email,Password) VALUES (?,?,?,?)";
       mysql.query(q, [firstName, lastName, email, password], (err, res) => {
         if (err) {
-          resp.status(501).json(err.sqlMessage);
+          // resp.status(501).json(err.sqlMessage);
+          resp.json(err.sqlMessage);
         } else {
-          resp.status(201).json(res.insertId);
+          // resp.status(201).json(res.insertId);
+          resp.json(res.insertId);
         }
       });
     } catch (err) {
