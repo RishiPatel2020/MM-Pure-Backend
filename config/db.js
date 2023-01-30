@@ -10,6 +10,7 @@ const pool = mysql.createPool({
     user: "root" /* MySQL User */,
     password: "Jnna6d0hSQ7oum5GK6WR" /* MySQL Password */,
     database: "railway" /* MySQL Database */,
+    port:"6748"
   });;
 
 
