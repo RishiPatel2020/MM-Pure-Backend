@@ -12,13 +12,10 @@ const mysql = require("mysql2");
 //     database: "railway" /* MySQL Database */,
 //     port:"6748"
 //   });;
-
-const mysql = require("mysql2");
-
 const pool = mysql.createPool({
   host: "containers-us-west-186.railway.app",
   user: "root",
-  password: "Jnna6d0hSQ7oum5GK6WR",
+  password: "EQMsQGBRx4ZA3NSxOx7s",
   database: "railway",
   port: "6748",
 });
