@@ -7,15 +7,19 @@ class User {
   //   CREATE USER OR REGISTER
   add({ firstName, lastName, email, password }, resp) {
     resp.json("Add hit!!");
-    const q =
-      "INSERT INTO Customer (First_Name, Last_Name,Email,Password) VALUES (?,?,?,?)";
-    mysql.query(q, [firstName, lastName, email, password], (err, res) => {
-      if (err) {
-        resp.status(501).json(err.sqlMessage);
-      } else {
-        resp.status(201).json(res.insertId);
-      }
-    });
+    try {
+      const q =
+        "INSERT INTO Customer (First_Name, Last_Name,Email,Password) VALUES (?,?,?,?)";
+      mysql.query(q, [firstName, lastName, email, password], (err, res) => {
+        if (err) {
+          resp.status(501).json(err.sqlMessage);
+        } else {
+          resp.status(201).json(res.insertId);
+        }
+      });
+    } catch (err) {
+      resp.json(err);
+    }
   }
 
   // LOGIN USER
@@ -76,7 +80,7 @@ class User {
       } else {
         const result = JSON.stringify(res);
         let promises = [];
-        this.finalOrderHistory = []; 
+        this.finalOrderHistory = [];
         JSON.parse(result).forEach(async (item) => {
           let objToBeAdded = {
             OrderId: item.OrderID,
@@ -89,16 +93,16 @@ class User {
           this.finalOrderHistory.push(objToBeAdded);
           promises.push(this.callBack(item.OrderID));
         });
-        Promise.all(promises).then((result) => {
-          result.forEach((item, index) => {
-            this.finalOrderHistory[index].meals = JSON.parse(item);
+        Promise.all(promises)
+          .then((result) => {
+            result.forEach((item, index) => {
+              this.finalOrderHistory[index].meals = JSON.parse(item);
+            });
+            resp.status(200).json(this.finalOrderHistory);
+          })
+          .catch((error) => {
+            resp.status(500).json({ error });
           });
-          resp.status(200).json(this.finalOrderHistory);
-        })
-        .catch((error)=>{
-          resp.status(500).json({ error });
-        });
-
       }
     });
   }
