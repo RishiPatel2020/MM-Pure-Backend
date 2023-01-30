@@ -6,7 +6,6 @@ class User {
   }
   //   CREATE USER OR REGISTER
   add({ firstName, lastName, email, password }, resp) {
-    resp.json("Add hit!!");
     try {
       const q =
         "INSERT INTO Customer (First_Name, Last_Name,Email,Password) VALUES (?,?,?,?)";
