@@ -60,19 +60,29 @@ class User {
   }
 
   // LOGIN USER
-  logIn({ userName, password }, resp) {
-    const q = "SELECT * FROM Customer WHERE EMAIL = ? AND PASSWORD = ?";
-    mysql.query(q, [userName, password], (err, res) => {
-      if (err) {
-        resp.status(501).json(err.sqlMessage);
-      } else {
-        if (res[0]) {
-          resp.status(200).json(res[0]);
-        } else {
-          resp.status(401).json("Unauthorized!");
-        }
-      }
-    });
+  // logIn({ userName, password }, resp) {
+  //   const q = "SELECT * FROM Customer WHERE EMAIL = ? AND PASSWORD = ?";
+  //   mysql.query(q, [userName, password], (err, res) => {
+  //     if (err) {
+  //       resp.status(501).json(err.sqlMessage);
+  //     } else {
+  //       if (res[0]) {
+  //         resp.status(200).json(res[0]);
+  //       } else {
+  //         resp.status(401).json("Unauthorized!");
+  //       }
+  //     }
+  //   });
+  // }
+
+  async logIn({ userName, password }, resp) {
+    try {
+      const q = "SELECT * FROM Customer WHERE EMAIL = ? AND PASSWORD = ?";
+      const result = await mysql.query(q, [userName, password]);
+      resp.json(result);
+    } catch (err) {
+      resp.status(501).send(err.message);
+    }
   }
 
   // UPDATE LOG IN INFO
