@@ -43,7 +43,7 @@ class User {
       const q =
         "INSERT INTO Customer (First_Name, Last_Name,Email,Password) VALUES (?,?,?,?)";
         const result = await mysql.query(q, [firstName, lastName, email, password]);
-          res.send(result); 
+          resp.send(result); 
       //   if (err) {
       //     // resp.status(501).json(err.sqlMessage);
       //     resp.json(err.sqlMessage);
