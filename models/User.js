@@ -7,15 +7,20 @@ class User {
 
   async add({ firstName, lastName, email, password }, res) {
     try {
-      const q = "INSERT INTO Customer (First_Name, Last_Name,Email,Password) VALUES (?,?,?,?)";
-      const result = await mysql.query(q, [firstName, lastName, email, password]);
+      const q =
+        "INSERT INTO Customer (First_Name, Last_Name,Email,Password) VALUES (?,?,?,?)";
+      const result = await mysql.query(q, [
+        firstName,
+        lastName,
+        email,
+        password,
+      ]);
       console.log(`SUCCESSFUL ADDITION: ${result.insertId}`);
       res.status(201).send(result.insertId.toString());
     } catch (err) {
       res.status(501).send(err.sqlMessage);
     }
   }
-
 
   // add({ firstName, lastName, email, password }, resp) {
   //   try {
@@ -36,26 +41,21 @@ class User {
   //     resp.json(err);
   //   }
   // }
-  
+
   //   CREATE USER OR REGISTER
   async add({ firstName, lastName, email, password }, resp) {
     try {
       const q =
         "INSERT INTO Customer (First_Name, Last_Name,Email,Password) VALUES (?,?,?,?)";
-        const result = await mysql.query(q, [firstName, lastName, email, password]);
-          resp.send(result); 
-      //   if (err) {
-      //     // resp.status(501).json(err.sqlMessage);
-      //     resp.json(err.sqlMessage);
-      //   } else {
-      //     // resp.status(201).json(res.insertId);
-      //     console.log(`SUCCESSFUL ADDITION: ${res.insertId}`);
-      //     // resp.json(res.insertId);
-      //     resp.send(res.insertId);
-      //   }
-      // });
+      const result = await mysql.query(q, [
+        firstName,
+        lastName,
+        email,
+        password,
+      ]);
+      resp.json(result);
     } catch (err) {
-      resp.json(err);
+      resp.status(501).send(err.message);
     }
   }
 
