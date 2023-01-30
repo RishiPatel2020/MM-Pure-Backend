@@ -26,7 +26,7 @@ class User {
 
   // LOGIN USER
   logIn({ userName, password }, resp) {
-    const q = "SELECT * FROM CUSTOMER WHERE EMAIL = ? AND PASSWORD = ?";
+    const q = "SELECT * FROM Customer WHERE EMAIL = ? AND PASSWORD = ?";
     mysql.query(q, [userName, password], (err, res) => {
       if (err) {
         resp.status(501).json(err.sqlMessage);
@@ -42,7 +42,7 @@ class User {
 
   // UPDATE LOG IN INFO
   update({ id, userName, password }, resp) {
-    const q = "UPDATE CUSTOMER SET email = ?, password = ? WHERE id=?";
+    const q = "UPDATE Customer SET email = ?, password = ? WHERE id=?";
     mysql.query(q, [userName, password, id], (err, res) => {
       if (err) {
         resp.status(501).json(err.sqlMessage);
@@ -73,11 +73,11 @@ class User {
       });
     });
   }
-  accountHistory(customerId, resp) {
-    console.log(`CustomerId is ${customerId}`);
+  accountHistory(CustomerId, resp) {
+    console.log(`CustomerId is ${CustomerId}`);
     const q =
       "with PartialInfo as (select ot.id as OrderID, c.id as CustomerID, sum(h.quantity) as MealSize From Customer c Join Order_table ot on c.id = ot.Customer_id Join Hotel h on ot.id = h.Order_ID Join Item i on h.item_id = i.item_id group by OrderID having c.id = ?) select OrderID, CustomerID, MealSize, Total_price, Shipping_date, order_date from PartialInfo join Order_table on Order_table.id=PartialInfo.OrderID";
-    mysql.query(q, [customerId], (err, res) => {
+    mysql.query(q, [CustomerId], (err, res) => {
       if (err) {
       } else {
         const result = JSON.stringify(res);
