@@ -32,13 +32,4 @@ app.use("/api/SMS", sms);
 
 app.get("/", (req, res) => {
   res.json(`Backend hit successfully! RUnning on ::: ${process.env.DB_HOST}`);
-  const q =
-    "SELECT * FROM CUSTOMER";
-  mysql.query(q,(err, res) => {
-    if (err) {
-      resp.status(206).json("Error");
-    } else {
-      resp.status(200).json(res);
-    }
-  });
 });
