@@ -34,7 +34,7 @@ class User {
           // resp.status(201).json(res.insertId);
           console.log(`SUCCESSFUL ADDITION: ${res.insertId}`);
           // resp.json(res.insertId);
-          resp.send(res.insertId);
+          resp.send(res[0].insertId);
         }
       });
     } catch (err) {
