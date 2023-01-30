@@ -5,59 +5,59 @@ class User {
     this.finalOrderHistory = [];
   }
 
-  async add({ firstName, lastName, email, password }, res) {
-    try {
-      const q =
-        "INSERT INTO Customer (First_Name, Last_Name,Email,Password) VALUES (?,?,?,?)";
-      const result = await mysql.query(q, [
-        firstName,
-        lastName,
-        email,
-        password,
-      ]);
-      console.log(`SUCCESSFUL ADDITION: ${result.insertId}`);
-      res.status(201).send(result.insertId.toString());
-    } catch (err) {
-      res.status(501).send(err.sqlMessage);
-    }
-  }
-
-  // add({ firstName, lastName, email, password }, resp) {
+  // async add({ firstName, lastName, email, password }, res) {
   //   try {
   //     const q =
   //       "INSERT INTO Customer (First_Name, Last_Name,Email,Password) VALUES (?,?,?,?)";
-  //     mysql.query(q, [firstName, lastName, email, password], (err, res) => {
-  //       if (err) {
-  //         // resp.status(501).json(err.sqlMessage);
-  //         resp.json(err.sqlMessage);
-  //       } else {
-  //         // resp.status(201).json(res.insertId);
-  //         console.log(`SUCCESSFUL ADDITION: ${res.insertId}`);
-  //         // resp.json(res.insertId);
-  //         resp.send(res.insertId);
-  //       }
-  //     });
+  //     const result = await mysql.query(q, [
+  //       firstName,
+  //       lastName,
+  //       email,
+  //       password,
+  //     ]);
+  //     console.log(`SUCCESSFUL ADDITION: ${result.insertId}`);
+  //     res.status(201).send(result.insertId.toString());
   //   } catch (err) {
-  //     resp.json(err);
+  //     res.status(501).send(err.sqlMessage);
   //   }
   // }
 
-  //   CREATE USER OR REGISTER
-  async add({ firstName, lastName, email, password }, resp) {
+  add({ firstName, lastName, email, password }, resp) {
     try {
       const q =
         "INSERT INTO Customer (First_Name, Last_Name,Email,Password) VALUES (?,?,?,?)";
-      const result = await mysql.query(q, [
-        firstName,
-        lastName,
-        email,
-        password,
-      ]);
-      resp.json(result);
+      mysql.query(q, [firstName, lastName, email, password], (err, res) => {
+        if (err) {
+          // resp.status(501).json(err.sqlMessage);
+          resp.json(err.sqlMessage);
+        } else {
+          // resp.status(201).json(res.insertId);
+          console.log(`SUCCESSFUL ADDITION: ${res.insertId}`);
+          // resp.json(res.insertId);
+          resp.send(res.insertId);
+        }
+      });
     } catch (err) {
-      resp.status(501).send(err.message);
+      resp.json(err);
     }
   }
+
+  //   CREATE USER OR REGISTER
+  // async add({ firstName, lastName, email, password }, resp) {
+  //   try {
+  //     const q =
+  //       "INSERT INTO Customer (First_Name, Last_Name,Email,Password) VALUES (?,?,?,?)";
+  //     const result = await mysql.query(q, [
+  //       firstName,
+  //       lastName,
+  //       email,
+  //       password,
+  //     ]);
+  //     resp.json(result);
+  //   } catch (err) {
+  //     resp.status(501).send(err.message);
+  //   }
+  // }
 
   // LOGIN USER
   // logIn({ userName, password }, resp) {

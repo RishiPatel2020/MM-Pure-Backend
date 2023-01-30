@@ -31,12 +31,5 @@ app.use("/api/hotel", hotel);
 app.use("/api/SMS", sms);
 
 app.get("/", (req, res) => {
-  // res.json(`Backend hit successfully! RUnning on ::: ${process.env.PORT}`);
-  mysql.query('SELECT * FROM Customer', (err, result) => {
-    if (err) {
-      res.status(200).send({ error: 'Error running query' });
-    } else {
-      res.status(200).send(result);
-    }
-  });
+  res.json(`Backend hit successfully! RUnning on ::: ${process.env.PORT}`);
 });
