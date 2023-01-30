@@ -29,7 +29,7 @@ pool.getConnection((err, connection) => {
   }
 
   console.log('Connected to database as id ', connection.threadId);
-  connection.release();
+  // connection.release();
 });
 
-// module.exports = pool.promise(); 
+module.exports = pool.promise(); 
