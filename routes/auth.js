@@ -3,7 +3,6 @@ const User = require("../models/User");
 
 // REGISTER
 router.post("/register", (req, res) => {
-  res.json("Register hit!!");
   const data = req.body;
   User.add(data, res);
 });

@@ -6,6 +6,7 @@ class User {
   }
   //   CREATE USER OR REGISTER
   add({ firstName, lastName, email, password }, resp) {
+    res.json("Add hit!!");
     const q =
       "INSERT INTO Customer (First_Name, Last_Name,Email,Password) VALUES (?,?,?,?)";
     mysql.query(q, [firstName, lastName, email, password], (err, res) => {
