@@ -13,23 +13,14 @@ const mysql = require("mysql2");
 //     port:"6748"
 //   });;
 
+const mysql = require("mysql2");
 
 const pool = mysql.createPool({
   host: "containers-us-west-186.railway.app",
   user: "root",
   password: "Jnna6d0hSQ7oum5GK6WR",
   database: "railway",
-  port:"6748"
+  port: "6748",
 });
 
-pool.getConnection((err, connection) => {
-  if (err) {
-    console.error('Error connecting to database: ', err.stack);
-    return;
-  }
-
-  console.log('Connected to database as id ', connection.threadId);
-  // connection.release();
-});
-
-module.exports = pool.promise(); 
+module.exports = pool.promise();
