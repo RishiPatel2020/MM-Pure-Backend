@@ -60,9 +60,24 @@ class User {
   }
 
   // LOGIN USER
+  // logIn({ userName, password }, resp) {
+  //   const q = "SELECT * FROM Customer WHERE EMAIL = ? AND PASSWORD = ?";
+  //   mysql.query(q, [userName, password], (err, res) => {
+  //     if (err) {
+  //       resp.status(501).json(err.sqlMessage);
+  //     } else {
+  //       if (res[0]) {
+  //         resp.status(200).json(res[0]);
+  //       } else {
+  //         resp.status(401).json("Unauthorized!");
+  //       }
+  //     }
+  //   });
+  // }
+
   logIn({ userName, password }, resp) {
     const q = "SELECT * FROM Customer WHERE EMAIL = ? AND PASSWORD = ?";
-    mysql.query(q, [userName, password], (err, res) => {
+    const r = mysql.query(q, [userName, password], (err, res) => {
       if (err) {
         resp.status(501).json(err.sqlMessage);
       } else {
@@ -72,9 +87,9 @@ class User {
           resp.status(401).json("Unauthorized!");
         }
       }
+      resp.json(r[0]);
     });
   }
-
   // async logIn({ userName, password }, resp) {
   //   try {
   //     const q = "SELECT * FROM Customer WHERE EMAIL = ? AND PASSWORD = ?";
