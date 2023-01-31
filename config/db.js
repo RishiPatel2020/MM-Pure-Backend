@@ -20,4 +20,5 @@ const pool = mysql.createPool({
   port: "6748",
 });
 
-module.exports = pool.promise();
+// module.exports = pool.promise();
+module.exports = pool;
