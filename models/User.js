@@ -5,22 +5,33 @@ class User {
     this.finalOrderHistory = [];
   }
 
-  // async add({ firstName, lastName, email, password }, res) {
-  //   try {
-  //     const q =
-  //       "INSERT INTO Customer (First_Name, Last_Name,Email,Password) VALUES (?,?,?,?)";
-  //     const result = await mysql.query(q, [
-  //       firstName,
-  //       lastName,
-  //       email,
-  //       password,
-  //     ]);
-  //     console.log(`SUCCESSFUL ADDITION: ${result.insertId}`);
-  //     res.status(201).send(result.insertId.toString());
-  //   } catch (err) {
-  //     res.status(501).send(err.sqlMessage);
-  //   }
-  // }
+  async add({ firstName, lastName, email, password }, response) {
+    try {
+      const q =
+        "INSERT INTO Customer (First_Name, Last_Name,Email,Password) VALUES (?,?,?,?)";
+      const [result] = await mysql.query(q, [
+        firstName,
+        lastName,
+        email,
+        password,
+      ]);
+      console.log(`SUCCESSFUL ADDITION: ${result.insertId}`);
+      response.status(201).json(result.insertId);
+    } catch (err) {
+      response.status(501).json(err.sqlMessage);
+    }
+  }
+
+  async logIn({ userName, password }, resp) {
+    try {
+      const q = "SELECT * FROM Customer WHERE EMAIL = ? AND PASSWORD = ?";
+      const [result] = await mysql.query(q, [userName, password]);
+      console.log(`User Found: ${result}`);
+      resp.status(200).json(result);
+    } catch (err) {
+      resp.status(501).json(err.message);
+    }
+  }
 
   // add({ firstName, lastName, email, password }, resp) {
   //   try {
@@ -43,21 +54,21 @@ class User {
   // }
 
   //   CREATE USER OR REGISTER
-  async add({ firstName, lastName, email, password }, resp) {
-    try {
-      const q =
-        "INSERT INTO Customer (First_Name, Last_Name,Email,Password) VALUES (?,?,?,?)";
-      const result = await mysql.query(q, [
-        firstName,
-        lastName,
-        email,
-        password,
-      ]);
-      resp.json(result[0].insertId);
-    } catch (err) {
-      resp.status(501).send(err.message);
-    }
-  }
+  // async add({ firstName, lastName, email, password }, resp) {
+  //   try {
+  //     const q =
+  //       "INSERT INTO Customer (First_Name, Last_Name,Email,Password) VALUES (?,?,?,?)";
+  //     const result = await mysql.query(q, [
+  //       firstName,
+  //       lastName,
+  //       email,
+  //       password,
+  //     ]);
+  //     resp.json(result[0].insertId);
+  //   } catch (err) {
+  //     resp.status(501).send(err.message);
+  //   }
+  // }
 
   // LOGIN USER
   // logIn({ userName, password }, resp) {
@@ -75,30 +86,22 @@ class User {
   //   });
   // }
 
-  logIn({ userName, password }, resp) {
-    const q = "SELECT * FROM Customer WHERE EMAIL = ? AND PASSWORD = ?";
-    const r = mysql.query(q, [userName, password], (err, res) => {
-      if (err) {
-        resp.status(501).json(err.sqlMessage);
-      } else {
-        if (res[0]) {
-          resp.status(200).json(res[0]);
-        } else {
-          resp.status(401).json("Unauthorized!");
-        }
-      }
-      resp.json(r[0]);
-    });
-  }
-  // async logIn({ userName, password }, resp) {
-  //   try {
-  //     const q = "SELECT * FROM Customer WHERE EMAIL = ? AND PASSWORD = ?";
-  //     const result = await mysql.query(q, [userName, password]);
-  //     resp.json(result);
-  //   } catch (err) {
-  //     resp.status(501).send(err.message);
-  //   }
+  // logIn({ userName, password }, resp) {
+  //   const q = "SELECT * FROM Customer WHERE EMAIL = ? AND PASSWORD = ?";
+  //   const r = mysql.query(q, [userName, password], (err, res) => {
+  //     if (err) {
+  //       resp.status(501).json(err.sqlMessage);
+  //     } else {
+  //       if (res[0]) {
+  //         resp.status(200).json(res[0]);
+  //       } else {
+  //         resp.status(401).json("Unauthorized!");
+  //       }
+  //     }
+  //     resp.json(r[0]);
+  //   });
   // }
+ 
 
   // UPDATE LOG IN INFO
   update({ id, userName, password }, resp) {

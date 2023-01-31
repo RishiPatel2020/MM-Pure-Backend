@@ -18,7 +18,7 @@ const pool = mysql.createPool({
   password: "EQMsQGBRx4ZA3NSxOx7s",
   database: "railway",
   port: "6748",
-});
+}).promise();
 
 // module.exports = pool.promise();
 module.exports = pool;
