@@ -8,7 +8,7 @@ class Hotel {
     try {
       itemAndquantity.map((item) => {
         const q =
-          "INSERT INTO HOTEL (Order_ID, Item_ID, Quantity) VALUES (?,?,?)";
+          "INSERT INTO Hotel (Order_ID, Item_ID, Quantity) VALUES (?,?,?)";
         mysql.query(q, [orderId, item[0], item[1]], (err, res) => {
           // Handle this
           if (err) {
@@ -47,6 +47,7 @@ class Hotel {
       });
       resp.status(200).json(Object.values(temp));
     } catch (err) {
+      console.log("ERROR: "+err);
       resp.status(206).json(err);
     }
   }
