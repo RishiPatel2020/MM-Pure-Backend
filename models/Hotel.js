@@ -29,7 +29,7 @@ class Hotel {
   // PREPARES TABLE 2
   getOrdersTable(date, resp) {
     const q =
-      "Select ot.id,i.Name,h.quantity,ot.Shipping_Date FROM Order_table ot JOIN Hotel H On ot.id = h.Order_ID JOIN ITEM i On H.Item_ID = i.Item_ID Where ot.Shipping_date = ? ORDER BY ot.Order_date";
+      "Select ot.id,i.Name,h.quantity,ot.Shipping_Date FROM Order_table ot JOIN Hotel H On ot.id = h.Order_ID JOIN Item i On H.Item_ID = i.Item_ID Where ot.Shipping_date = ? ORDER BY ot.Order_date";
     mysql.query(q, [date], (err, res) => {
       // Handle this
       if (err) {
