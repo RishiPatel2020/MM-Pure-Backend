@@ -27,7 +27,7 @@ class User {
       const q = "SELECT * FROM Customer WHERE EMAIL = ? AND PASSWORD = ?";
       const [result] = await mysql.query(q, [userName, password]);
       console.log(`User Found: ${result}`);
-      resp.status(200).json(result);
+      resp.status(200).json(result[0]);
     } catch (err) {
       resp.status(501).json(err.message);
     }
