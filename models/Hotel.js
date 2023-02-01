@@ -27,51 +27,40 @@ class Hotel {
   }
 
   // PREPARES TABLE 2
-  getOrdersTable(date, resp) {
-    const q =
-      "Select ot.id,i.Name,h.quantity,ot.Shipping_Date FROM Order_table ot JOIN Hotel H On ot.id = h.Order_ID JOIN Item i On H.Item_ID = i.Item_ID Where ot.Shipping_date = ? ORDER BY ot.Order_date";
-    mysql.query(q, [date], (err, res) => {
-      // Handle this
-      if (err) {
-        console.log("ERROR IN Getting MealQuantity Table:: " + err.code);
-        resp.status(206).json(err);
-      } else {
-        // resp.status(200).json(res);
-        const result = JSON.stringify(res);
-        const temp = {};
-
-        JSON.parse(result).forEach((element) => {
-          if (temp[element.id]) {
-            // temp[element.id].meals.push({Name:element.Name,quantity: element.quantity});
-            temp[element.id].meals.push([element.Name,element.quantity]);
-          } else {
-            const objToBeAdded = {
-              orderNumber: element.id,
-              // meals: [{Name:element.Name,quantity: element.quantity}],
-              meals: [[element.Name,element.quantity]],
-              dueDate: element.Shipping_Date,
-            };
-            temp[element.id] = objToBeAdded;
-          }
-        });
-        resp.status(200).json(Object.values(temp));
-      }
-    });
+  async getOrdersTable(date, resp) {
+    try {
+      const q =
+        "Select ot.id,i.Name,h.quantity,ot.Shipping_Date FROM Order_table ot JOIN Hotel H On ot.id = h.Order_ID JOIN Item i On H.Item_ID = i.Item_ID Where ot.Shipping_date = ? ORDER BY ot.Order_date";
+      const [result] = await mysql.query(q, [date]);
+      const temp = {};
+      JSON.parse(result).forEach((element) => {
+        if (temp[element.id]) {
+          temp[element.id].meals.push([element.Name, element.quantity]);
+        } else {
+          const objToBeAdded = {
+            orderNumber: element.id,
+            meals: [[element.Name, element.quantity]],
+            dueDate: element.Shipping_Date,
+          };
+          temp[element.id] = objToBeAdded;
+        }
+      });
+      resp.status(200).json(Object.values(temp));
+    } catch (err) {
+      resp.status(206).json(err);
+    }
   }
 
   // PREPARES TABLE 1
-  getMealQuantityTable(date, resp) {
-    const q =
-      "Select  Hotel.item_id, sum(Hotel.Quantity) as Total_Quantity From Order_table ot JOIN Hotel on ot.id = Hotel.order_id Where ot.Shipping_date = ? Group By item_id";
-    mysql.query(q, [date], (err, res) => {
-      // Handle this
-      if (err) {
-        console.log("ERROR IN Getting MealQuantity Table:: " + err.code);
-        resp.status(206).json(err);
-      } else {
-        resp.status(200).json(res);
-      }
-    });
+  async getMealQuantityTable(date, resp) {
+    try {
+      const q =
+        "Select  Hotel.item_id, sum(Hotel.Quantity) as Total_Quantity From Order_table ot JOIN Hotel on ot.id = Hotel.order_id Where ot.Shipping_date = ? Group By item_ID";
+      const [result] = mysql.query(q, [date]);
+      resp.status(200).json(result);
+    } catch (err) {
+      resp.status(206).json(err);
+    }
   }
 }
 
