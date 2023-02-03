@@ -1,3 +1,4 @@
+const mysql = require("../config/db");
 class DataCollection {
   async addReferral({ url }, response) {
     try {
