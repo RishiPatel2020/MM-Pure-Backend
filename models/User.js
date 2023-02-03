@@ -6,15 +6,16 @@ class User {
   }
 
   // REGISTER USER
-  async add({ firstName, lastName, email, password }, response) {
+  async add({ firstName, lastName, email, password, phone}, response) {
     try {
       const q =
-        "INSERT INTO Customer (First_Name, Last_Name,Email,Password) VALUES (?,?,?,?)";
+        "INSERT INTO Customer (First_Name, Last_Name,Email,Password,phone) VALUES (?,?,?,?,?)";
       const [result] = await mysql.query(q, [
         firstName,
         lastName,
         email,
         password,
+        phone
       ]);
       console.log(`SUCCESSFUL ADDITION: ${result.insertId}`);
       response.status(201).json(result.insertId);
