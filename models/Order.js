@@ -34,7 +34,6 @@ class Order {
       try {
         const phoneQuery = "SELECT phone FROM Customer WHERE id = ?";
         const [phoneNumber] = await mysql.query(phoneQuery, [Customer_id]);
-        console.log(JSON.stringify(phoneNumber)); 
         SMS.sendMessage(phoneNumber[0].phone,`Order Confirmation #${result.insertId}`);
       } catch (err) {}
 
