@@ -18,6 +18,24 @@ class SMS {
         resp.status(206).json(err)
       });
   }
+
+
+  sendMessage(number,message) {
+    console.log("SMS.JS HIT:: "+number);
+    client.messages
+      .create({
+        body: message,
+        to: `+1${number}`, // Text this number
+        from: "+18623297327", // From a valid Twilio number
+      })
+      .then((message) => {
+        console.log("SUCCESSFUL....");
+        return true 
+      }).catch((err)=>{
+        console.log("FAILED...."+err);
+        return false;
+      });
+  }
 }
 
 module.exports = new SMS();
