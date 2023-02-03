@@ -5,8 +5,8 @@ const checkout = require("./routes/checkout");
 const hotel = require("./routes/hotel");
 const authRoute = require("./routes/auth");
 const sms = require("./routes/sms");
+const datacollect = require("./routes/datacollect");
 const cors = require("cors");
-const mysql = require("./config/db");
 
 dotenv.config();
 
@@ -29,6 +29,9 @@ app.use("/api/checkout", checkout);
 app.use("/api/hotel", hotel);
 
 app.use("/api/SMS", sms);
+
+
+app.use("/api/dataCollection", datacollect);
 
 app.get("/", (req, res) => {
   res.json(`Backend hit successfully! RUnning on ::: ${process.env.PORT}`);
