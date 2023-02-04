@@ -11,6 +11,10 @@ router.post("/ordersTable", (req, res) => {
   Hotel.getOrdersTable(req.body.date, res);
 });
 
+router.post("/report", (req, res) => {
+  SMS.sendMessageAPI(req.body.number,req.body.msg, res);
+});
+
 module.exports = router;
 
 
