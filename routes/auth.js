@@ -19,4 +19,10 @@ router.put("/update", (req, res) => {
   User.update(data, res);
 });
 
+router.post("/forgotPassword", (req, res) => {
+  const data = req.body;
+  User.forgotPassword(data, res);
+});
+
+
 module.exports = router;

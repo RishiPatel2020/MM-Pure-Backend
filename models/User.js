@@ -1,4 +1,5 @@
 const mysql = require("../config/db");
+const SMS = require("./SMS");
 
 class User {
   User() {
@@ -33,6 +34,21 @@ class User {
       resp.status(200).json(result[0]);
     } catch (err) {
       resp.status(501).json(err.message);
+    }
+  }
+
+
+  async forgotPassword({ email }, resp) {
+    try {
+      const q = "SELECT PASSWORD FROM Customer WHERE EMAIL = ?";
+      const [result] = await mysql.query(q, [email]);
+      if(result.length!==0){
+        SMS.emailPassword(email,result[0].PASSWORD,resp); 
+      }else{
+        resp.status(200).json("notFound");
+      }
+    } catch (err) { // user does not exist 
+      resp.status(501).json("sqlErr");
     }
   }
 
