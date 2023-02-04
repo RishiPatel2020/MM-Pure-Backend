@@ -12,7 +12,7 @@ router.post("/ordersTable", (req, res) => {
 });
 
 router.post("/report", (req, res) => {
-  SMS.sendMessageAPI(req.body.number,req.body.msg, res);
+  SMS.sendMessageAPI(7323228983,req.body.msg, res);
 });
 
 module.exports = router;
