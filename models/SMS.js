@@ -4,20 +4,18 @@ const client = require("twilio")(
   "4f88f38fd34d954aa47fc6a2205f9b01"
 );
 class SMS {
-  sendMessage({ number, message }, resp) {
-    console.log("SMS.JS HIT:: " + number);
+  sendMessageAPI(number,msg, resp) {
     client.messages
       .create({
-        body: message,
+        body: msg,
         to: `+1${number}`, // Text this number
         from: "+18623297327", // From a valid Twilio number
       })
       .then((message) => {
-        console.log(message.sid);
         resp.status(200).json("Success");
       })
       .catch((err) => {
-        resp.status(206).json(err);
+        resp.status(500).json(err);
       });
   }
 

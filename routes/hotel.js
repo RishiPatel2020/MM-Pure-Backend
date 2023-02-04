@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const Hotel = require("../models/Hotel");
-const User = require("../models/Hotel");
+const SMS = require("../models/SMS"); 
 
 // meal quantity Table
 router.post("/mealQuantityTable", (req, res) => {
