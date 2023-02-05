@@ -51,27 +51,26 @@ class SMS {
   async emailPassword(email, password, resp) {
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
-      service: "gmail",
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false, // true for 465, false for other ports
+      host: "smtpout.secureserver.net",
+      port: 465,
+      secure: true, // true for 465, false for other ports
       auth: {
-        user: "r53582477@gmail.com", // generated ethereal user
-        pass: "hcdtmzrcaskbmpmb", // generated ethereal password
+        user: "support@mirchimeals.com", // generated ethereal user
+        pass: "Vasantpillai01!", // generated ethereal password
       },
     });
 
     // send mail with defined transport object
     try {
       let info = await transporter.sendMail({
-        from: "r53582477@gmail.com", // sender address
+        from: "support@mirchimeals.com", // sender address
         to: email, // list of receivers
         subject: "Mirchi Meals Log In Credentials", // Subject line
         html: `<h1>Log in using following credentials: </h1><p>Email: ${email}</p><p>Password: ${password}</p>`, // html body
       });
       resp.status(200).json("sent");
     } catch (err) {
-      resp.status(200).json("notSent");
+      resp.status(200).json("notSent:: "+err);
     }
   }
 }
