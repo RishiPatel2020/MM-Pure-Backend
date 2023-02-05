@@ -9,6 +9,10 @@ router.post("/referral", (req, res) => {
     DataCollection.addReferral(req.body,res); 
 });
 
+router.post("/unprocessedMeals",(req,res)=>{
+    DataCollection.addUnprocessedMeals(req.body,res); 
+});
+
 
 
 module.exports = router;
