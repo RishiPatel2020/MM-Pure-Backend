@@ -31,7 +31,6 @@ class SMS {
   }
 
   sendMessage(number, message) {
-    console.log("SMS.JS HIT:: " + number);
     client.messages
       .create({
         body: message,
@@ -39,11 +38,9 @@ class SMS {
         from: "+18623297327", // From a valid Twilio number
       })
       .then((message) => {
-        console.log("SUCCESSFUL....");
         return true;
       })
       .catch((err) => {
-        console.log("FAILED...." + err);
         return false;
       });
   }

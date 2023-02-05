@@ -39,7 +39,6 @@ class Order {
 
       resp.status(200).json(result.insertId);
     } catch (err) {
-      console.log("Error:: " + err);
       resp.status(501).json(err);
     }
   }

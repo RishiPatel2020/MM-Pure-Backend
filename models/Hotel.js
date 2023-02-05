@@ -12,16 +12,12 @@ class Hotel {
         mysql.query(q, [orderId, item[0], item[1]], (err, res) => {
           // Handle this
           if (err) {
-            console.log("ERROR IN ADDING ITEM:: " + err.code);
             return false;
-          } else {
-            console.log("Added item successfully!");
           }
         });
       });
       return true;
     } catch (err) {
-      console.log("ERROR IN EXECUTING HOTEL ADD METHOD " + err);
       return false;
     }
   }
@@ -51,7 +47,6 @@ class Hotel {
       });
       resp.status(200).json(Object.values(temp));
     } catch (err) {
-      console.log("ERROR: " + err);
       resp.status(206).json(err);
     }
   }
@@ -67,10 +62,8 @@ class Hotel {
       const q =
         "Select  Hotel.Item_ID as item_id, sum(Hotel.Quantity) as Total_Quantity From Order_table ot JOIN Hotel on ot.id = Hotel.Order_Id Group By Item_ID";
       const [result] = await mysql.query(q);
-      console.log(JSON.stringify(result));
       resp.status(200).json(result);
     } catch (err) {
-      console.log("Error " + err);
       resp.status(206).json(err);
     }
   }

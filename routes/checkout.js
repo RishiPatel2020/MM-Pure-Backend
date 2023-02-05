@@ -14,7 +14,6 @@ router.post("/payment",(req,res)=>{
 
     },(stripeErr,stripeRes)=>{
         if(stripeErr){
-            console.log("ERROR... "+stripeErr);
             res.status(206).send(""+stripeErr);
         }else{
             res.status(200).json(stripeRes);

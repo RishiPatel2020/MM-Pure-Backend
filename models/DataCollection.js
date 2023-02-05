@@ -18,7 +18,6 @@ class DataCollection {
       const [result] = await mysql.query(q, [zipcode,planSize,JSON.stringify(mealsAndFreqs)]);
       response.status(200).json("Success");
     } catch (err) {
-      console.log("ERR: "+err); 
       response.status(501).json("Failed");
     }
   }
