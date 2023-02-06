@@ -21,6 +21,16 @@ class DataCollection {
       response.status(501).json("Failed");
     }
   }
+
+  async addZipCode({ zipcode}, response) {
+    try {
+      const q = "INSERT INTO ZipCodeTracker (zipcode) VALUES (?)";
+      const [result] = await mysql.query(q, [zipcode]);
+      response.status(200).json("Success");
+    } catch (err) {
+      response.status(501).json("Failed");
+    }
+  }
 }
 
 module.exports = new DataCollection();

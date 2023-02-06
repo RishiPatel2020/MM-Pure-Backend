@@ -13,6 +13,10 @@ router.post("/unprocessedMeals",(req,res)=>{
     DataCollection.addUnprocessedMeals(req.body,res); 
 });
 
+router.post("/zipCodeTracker",(req,res)=>{
+    DataCollection.addZipCode(req.body,res); 
+});
+
 
 
 module.exports = router;
