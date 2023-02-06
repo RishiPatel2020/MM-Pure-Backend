@@ -7,6 +7,10 @@ const authRoute = require("./routes/auth");
 const sms = require("./routes/sms");
 const datacollect = require("./routes/datacollect");
 const cors = require("cors");
+const backTask = require("./models/BackgroundTasks");
+
+// for sending orders
+backTask();
 
 dotenv.config();
 

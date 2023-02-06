@@ -17,4 +17,5 @@ class DateService {
   }
 }
 
-export default new DateService();
+module.exports = new DateService();
+

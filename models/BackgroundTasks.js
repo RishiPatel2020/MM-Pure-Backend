@@ -1,25 +1,30 @@
-const cron = require("cron");
+const mysql = require("../config/db");
+const cron = require("node-cron");
+const DateService = require("../service/DateService");
+const sendMsg = require("../models/SMS");
 
-function sendReminder() {
-//   if(saturday()){  
+async function reminder() {
+  const closestSunday = DateService.closestUpcomingSunday();
+  const q =
+    "SELECT First_Name, phone, derived.id FROM Customer JOIN (SELECT * FROM Order_table Where Shipping_date = ?) AS derived ON Customer.id = derived.Customer_id";
+  const [customers] = await mysql.query(q, [closestSunday]);
 
-//   }else{
-//     // today we'll delivery product in 30 mins 
-//   }
-    console.log("REMINDER at 11:00 PM EST!!");
+  customers.forEach((customer) => {
+    const { First_Name, phone, id } = customer;
+    let message;
+    if (DateService.isSaturday()) {
+      message = `Mirchi Meals \nHello ${First_Name}. Tomorrow you will get delivery around 06:30PM EST for order #${id}`;
+    } else {
+      message = ` Mirchi Meals \nHello ${First_Name}. Today you will get delivery around 06:30PM EST for order #${id}`;
+    }
+    sendMsg.sendMessage(phone,message);
+
+  });
 }
-// function startTask(){
-//     const job = new cron.CronJob(
-//         "0 0 9 * * 6,7",
-//         sendReminder,
-//         null,
-//         true,
-//         "America/New_York"
-//       );
-// }
 
-
-
-module.exports={
-    sendReminder
-}
+// replace 24 23 with 0 18 for 06:00PM EST
+module.exports = function () {
+  cron.schedule("0 18 * * 6,0", function () {
+    reminder();
+  });
+};
