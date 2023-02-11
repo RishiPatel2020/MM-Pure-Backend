@@ -41,6 +41,7 @@ class SMS {
         return true;
       })
       .catch((err) => {
+        console.log("Err while sending Msg: "+err);
         return false;
       });
   }
