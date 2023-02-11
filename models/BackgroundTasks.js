@@ -25,6 +25,7 @@ async function reminder() {
 // replace 24 23 with 0 18 for 06:00PM EST
 module.exports = function () {
   cron.schedule("0 0 18 * * 6,0", function () {
+    console.log("SEND SMSs NOW!!!");
     reminder();
   });
 };
