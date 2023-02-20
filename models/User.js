@@ -69,8 +69,10 @@ class User {
   }
 
   async callBack(OrderId) {
+    // const subQuery =
+    //   "select name from Item where Item_ID in (select item_id from Hotel where order_id = ?)";
     const subQuery =
-      "select name from Item where Item_ID in (select item_id from Hotel where order_id = ?)";
+      "SELECT Name as name, Quantity FROM (select * from Hotel where Order_ID  = ?) table1 INNER JOIN Item ON table1.Item_ID = Item.ITEM_ID";
     try {
       const [mealsOrdered] = await mysql.query(subQuery, [OrderId]);
       return JSON.stringify(mealsOrdered);
