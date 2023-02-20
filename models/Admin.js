@@ -115,8 +115,7 @@ class Admin {
 
       const q2 = "Delete from Order_table where id = ?";
       await mysql.query(q2, [orderNumber]);
-
-      resp.status(200);
+      resp.status(200).json("ok");
     } catch (err) {
       console.log("ERR: in Delete Function " + err);
       resp.status(206).json(err);
