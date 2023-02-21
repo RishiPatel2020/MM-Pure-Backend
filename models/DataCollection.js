@@ -1,4 +1,4 @@
-const mysql = require("../config/db");
+const mysql = require("../config/db").default;
 class DataCollection {
   async addReferral({ url }, response) {
     try {
@@ -10,19 +10,22 @@ class DataCollection {
     }
   }
 
-
-
   async addUnprocessedMeals({ zipcode, planSize, mealsAndFreqs }, response) {
     try {
-      const q = "INSERT INTO UnprocessedMeals (zipcode,planSize,meals) VALUES (?,?,?)";
-      const [result] = await mysql.query(q, [zipcode,planSize,JSON.stringify(mealsAndFreqs)]);
+      const q =
+        "INSERT INTO UnprocessedMeals (zipcode,planSize,meals) VALUES (?,?,?)";
+      const [result] = await mysql.query(q, [
+        zipcode,
+        planSize,
+        JSON.stringify(mealsAndFreqs),
+      ]);
       response.status(200).json("Success");
     } catch (err) {
       response.status(501).json("Failed");
     }
   }
 
-  async addZipCode({ zipcode}, response) {
+  async addZipCode({ zipcode }, response) {
     try {
       const q = "INSERT INTO ZipCodeTracker (zipcode) VALUES (?)";
       const [result] = await mysql.query(q, [zipcode]);

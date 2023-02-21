@@ -1,5 +1,5 @@
 const { SmsCommandContext } = require("twilio/lib/rest/supersim/v1/smsCommand");
-const mysql = require("../config/db");
+const mysql = require("../config/db").default;
 const Hotel = require("./Hotel");
 const SMS = require("./SMS");
 class Order {
@@ -30,16 +30,19 @@ class Order {
       ]);
       Hotel.add(result.insertId, mealAndFreqs);
       // send status
-      
+
       try {
         const phoneQuery = "SELECT phone FROM Customer WHERE id = ?";
         const [phoneNumber] = await mysql.query(phoneQuery, [Customer_id]);
-        SMS.sendMessage(phoneNumber[0].phone,`Order Confirmation #${result.insertId}`);
+        SMS.sendMessage(
+          phoneNumber[0].phone,
+          `Order Confirmation #${result.insertId}`
+        );
       } catch (err) {}
 
       resp.status(200).json(result.insertId);
     } catch (err) {
-      console.log("ERRR: "+err);
+      console.log("ERRR: " + err);
       resp.status(501).json(err);
     }
   }

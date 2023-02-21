@@ -1,4 +1,4 @@
-const mysql = require("../config/db");
+const mysql = require("../config/db").default;
 const cron = require("node-cron");
 const DateService = require("../service/DateService");
 const sendMsg = require("../models/SMS");
@@ -17,8 +17,7 @@ async function reminder() {
     } else {
       message = ` Mirchi Meals \nHello ${First_Name}. Today you will get delivery around 06:30PM EST for order #${id}`;
     }
-    sendMsg.sendMessage(phone,message);
-
+    sendMsg.sendMessage(phone, message);
   });
 }
 
