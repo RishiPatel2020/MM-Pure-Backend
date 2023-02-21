@@ -1,5 +1,5 @@
 const { SmsCommandContext } = require("twilio/lib/rest/supersim/v1/smsCommand");
-const mysql = require("../config/db").default;
+const mysql = require("../config/db");
 const Hotel = require("./Hotel");
 const SMS = require("./SMS");
 class Order {

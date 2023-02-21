@@ -24,5 +24,4 @@ router.post("/forgotPassword", (req, res) => {
   User.forgotPassword(data, res);
 });
 
-
 module.exports = router;

@@ -1,4 +1,4 @@
-const mysql = require("../config/db").default;
+const mysql = require("../config/db");
 const cron = require("node-cron");
 const DateService = require("../service/DateService");
 const sendMsg = require("../models/SMS");

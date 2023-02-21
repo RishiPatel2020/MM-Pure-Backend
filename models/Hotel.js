@@ -1,4 +1,4 @@
-const mysql = require("../config/db").default;
+const mysql = require("../config/db");
 
 class Hotel {
   // ADD (OrderID, itemId, quantity) in Hotel table

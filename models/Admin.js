@@ -1,4 +1,4 @@
-const mysql = require("../config/db").default;
+const mysql = require("../config/db");
 const DateService = require("../service/DateService");
 
 class Admin {

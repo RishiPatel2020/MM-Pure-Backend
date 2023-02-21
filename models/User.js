@@ -1,4 +1,4 @@
-const mysql = require("../config/db").default;
+const mysql = require("../config/db");
 const SMS = require("./SMS");
 
 class User {
